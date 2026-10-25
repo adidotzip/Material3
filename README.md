@@ -4,12 +4,13 @@
 
 A Material 3-inspired theme for Better Lyrics on YouTube Music.
 
-![preview](cover.png)
+![preview](images/cover.png)
 
 ## Features
 
 - Dark interface with expressive, colorful accents
 - Dynamic color styling inspired by Material You
+- Material 3 expressive loading indicator replacing the default spinner
 - Minimal layout designed to keep lyrics easy to read
 
 ## Preview
