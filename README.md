@@ -1,5 +1,6 @@
 # Material 3 Expressive
-
+[![Installs](https://img.shields.io/endpoint?url=https://better-lyrics-themes-api.boidu.dev/api/badge/material3)](https://github.com/adidotzip/Material3)
+[![Rating](https://img.shields.io/endpoint?url=https://better-lyrics-themes-api.boidu.dev/api/badge/material3/rating)](https://github.com/adidotzip/Material3)
 A Material 3-inspired theme for Better Lyrics on YouTube Music.
 
 ## Features
