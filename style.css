@@ -1248,3 +1248,44 @@ ytmusic-player-bar,
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* Keep the page behind the fullscreen player from scrolling. */
+html:has(ytmusic-player-page) ,
+body:has(ytmusic-player-page) {
+  overscroll-behavior: none !important;
+}
+
+/* YouTube Music mounts the fullscreen player as a page overlay.
+   Lock the document while it is active and let the player own gestures. */
+body:has(ytmusic-player-page) {
+  overflow: hidden !important;
+  position: fixed !important;
+  width: 100% !important;
+}
+
+/* Remove the theme's card-hover wash in the browse area.
+   Keep focus-visible feedback and all player controls interactive. */
+ytmusic-browse-response :is(
+  ytmusic-two-row-item-renderer,
+  ytmusic-four-row-item-renderer,
+  ytmusic-compact-station-renderer,
+  ytmusic-responsive-list-item-renderer
+):hover {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Disable hover-only visual shifts/highlights across the theme, without
+   suppressing keyboard focus or pressed/selected states. */
+@media (hover: hover) {
+  ytmusic-browse-response :is(
+    ytmusic-two-row-item-renderer,
+    ytmusic-four-row-item-renderer,
+    ytmusic-compact-station-renderer,
+    ytmusic-responsive-list-item-renderer
+  ):hover {
+    transform: none !important;
+    filter: none !important;
+  }
+}
