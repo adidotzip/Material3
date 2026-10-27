@@ -1250,20 +1250,6 @@ ytmusic-player-bar,
 }
 
 
-/* Keep the page behind the fullscreen player from scrolling. */
-html:has(ytmusic-player-page) ,
-body:has(ytmusic-player-page) {
-  overscroll-behavior: none !important;
-}
-
-/* YouTube Music mounts the fullscreen player as a page overlay.
-   Lock the document while it is active and let the player own gestures. */
-body:has(ytmusic-player-page) {
-  overflow: hidden !important;
-  position: fixed !important;
-  width: 100% !important;
-}
-
 /* Remove the theme's card-hover wash in the browse area.
    Keep focus-visible feedback and all player controls interactive. */
 ytmusic-browse-response :is(
