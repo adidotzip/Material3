@@ -1277,10 +1277,19 @@ ytmusic-browse-response :is(
 }
 
 
-/* Prevent background-page scrolling only while the fullscreen player is open.
-   The player-page-open attribute is present on ytmusic-player in the live DOM. */
-html:has(ytmusic-player[player-page-open]),
+/* Lock the document behind the fullscreen player.
+   Keep the lyrics/queue scrollers inside the player independently scrollable. */
+html:has(ytmusic-player[player-page-open]) {
+  height: 100% !important;
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+}
+
 body:has(ytmusic-player[player-page-open]) {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
   overflow: hidden !important;
   overscroll-behavior: none !important;
 }
