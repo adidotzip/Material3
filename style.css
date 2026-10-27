@@ -1289,3 +1289,56 @@ ytmusic-browse-response :is(
     filter: none !important;
   }
 }
+
+
+/* Material 3 wavy player progress */
+:root {
+  --m3-progress-size: 4px;
+  --m3-progress-wave-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='black' d='M0 4 C2 0 4 0 6 4 S10 8 12 4 V8 H0 Z'/%3E%3C/svg%3E");
+}
+
+/* Keep YouTube Music's native progress element and its seek behavior. */
+ytmusic-player-bar #progress-bar progress,
+ytmusic-player-bar progress,
+ytmusic-player-page #progress-bar progress {
+  block-size: calc(var(--m3-progress-size) * 2) !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+  background-color: color-mix(in srgb, var(--m3c-on-surface) 18%, transparent) !important;
+  color: var(--m3c-primary) !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
+ytmusic-player-bar #progress-bar progress::-webkit-progress-bar,
+ytmusic-player-bar progress::-webkit-progress-bar,
+ytmusic-player-page #progress-bar progress::-webkit-progress-bar {
+  background: transparent !important;
+}
+
+ytmusic-player-bar #progress-bar progress::-webkit-progress-value,
+ytmusic-player-bar progress::-webkit-progress-value,
+ytmusic-player-page #progress-bar progress::-webkit-progress-value {
+  background-color: currentColor !important;
+  -webkit-mask-image: var(--m3-progress-wave-mask) !important;
+  -webkit-mask-repeat: repeat-x !important;
+  -webkit-mask-position: 0 50% !important;
+  -webkit-mask-size: auto 100% !important;
+}
+
+ytmusic-player-bar #progress-bar progress::-moz-progress-bar,
+ytmusic-player-bar progress::-moz-progress-bar,
+ytmusic-player-page #progress-bar progress::-moz-progress-bar {
+  background-color: currentColor !important;
+  mask-image: var(--m3-progress-wave-mask) !important;
+  mask-repeat: repeat-x !important;
+  mask-position: 0 50% !important;
+  mask-size: auto 100% !important;
+}
+
+/* Preserve rounded edges for YouTube Music's legacy paper progress bar. */
+ytmusic-player-bar #progress-bar #primaryProgress.tp-yt-paper-progress,
+ytmusic-player-bar #progress-bar #secondaryProgress.tp-yt-paper-progress {
+  border-radius: 999px !important;
+}
