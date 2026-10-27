@@ -1296,11 +1296,12 @@ ytmusic-browse-response :is(
 
 
 /*
- * Stop scroll chaining from the fullscreen player into the page behind it.
- * Keep the player page's own queue/lyrics scrollers usable.
+ * Prevent the document from scrolling while the player page is open.
+ * Inner queue and lyrics scrollers remain available.
  */
 html:has(ytmusic-player[player-page-open]),
 body:has(ytmusic-player[player-page-open]) {
+  overflow: hidden !important;
   overscroll-behavior: none !important;
 }
 
@@ -1312,10 +1313,4 @@ ytmusic-player-page:has(ytmusic-player[player-page-open]) .content,
 ytmusic-player-page:has(ytmusic-player[player-page-open]) #main-panel,
 ytmusic-player-page:has(ytmusic-player[player-page-open]) ytmusic-tab-renderer.scroller {
   overscroll-behavior: contain !important;
-}
-
-/* Lock the underlying app's route scroller only while the player is open. */
-ytmusic-app-layout:has(ytmusic-player[player-page-open]) #content {
-  overflow: hidden !important;
-  overscroll-behavior: none !important;
 }
