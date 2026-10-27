@@ -1275,3 +1275,12 @@ ytmusic-browse-response :is(
     filter: none !important;
   }
 }
+
+
+/* Prevent background-page scrolling only while the fullscreen player is open.
+   The player-page-open attribute is present on ytmusic-player in the live DOM. */
+html:has(ytmusic-player[player-page-open]),
+body:has(ytmusic-player[player-page-open]) {
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+}
