@@ -920,7 +920,7 @@ tp-yt-app-drawer#guide:not([opened]),
 ytmusic-app-layout #guide:not([opened]) {
   transition-duration: 420ms !important;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
-  opacity: 0 !important;
+  opacity: 0;
   visibility: visible !important;
   pointer-events: none !important;
 }
@@ -1319,10 +1319,14 @@ ytmusic-player-page:has(ytmusic-player[player-page-open]) ytmusic-tab-renderer.s
 @property --p { syntax: "<number>"; inherits: true; initial-value: 0; }
 
 .blyrics--instrumental {
-  --ind: 56px;            /* overall size */
+  --ind: 35px;            /* overall size */
   --gapu: 3.6;            /* space between arc and track (svg units, caps included) */
+  --ring-stroke-width: 2.75;
+  --track-stroke-width: 2.1;
+  --ring-color: var(--m3c-on-surface-variant);
+  --track-color: var(--m3c-outline-variant);
   --flat-ms: min(300ms, calc(var(--blyrics-duration) * .4));   /* how long the waves take to flatten into the ring at the end */
-  --wave-ms: 1200ms;       /* time for the waves to travel one lobe, fixed whatever the gap length. lower = faster */
+  --wave-ms: 1500ms;       /* time for the waves to travel one lobe, fixed whatever the gap length. lower = faster */
   --p: 0;                 /* 0 to 100, animated below over the length of the gap */
   display: grid !important;
   justify-content: start;
@@ -1331,21 +1335,51 @@ ytmusic-player-page:has(ytmusic-player[player-page-open]) ytmusic-tab-renderer.s
 .blyrics--instrumental .blyrics--instrumental-icon {
   display: block !important;
   width: var(--ind) !important; height: var(--ind) !important;
-  margin-block: 12px;
+  margin-block: 6px;
   overflow: visible;
-  opacity: 1 !important;
+  opacity: 0;
   transform: none;
+  transition: opacity 320ms cubic-bezier(0.2, 0, 0, 1);
+  will-change: opacity;
   -webkit-mask: none !important; mask: none !important;
+}
+
+.blyrics--instrumental.blyrics--animating .blyrics--instrumental-icon,
+.blyrics--instrumental.blyrics--paused .blyrics--instrumental-icon {
+  opacity: 1;
+}
+
+.blyrics--instrumental.blyrics--active:not(.blyrics--animating) .blyrics--instrumental-icon {
+  opacity: 1;
+  animation: none;
+  transition-delay: 0s;
+}
+
+.blyrics--instrumental.blyrics--animating:not(.blyrics--active) .blyrics--instrumental-icon {
+  opacity: 0;
+  transition-delay: 0s;
+}
+
+.blyrics--instrumental.blyrics--animating .blyrics--instrumental-icon {
+  animation: none;
+  transition-delay: 400ms;
+}
+
+.blyrics--instrumental.blyrics--paused .blyrics--instrumental-icon {
+  transition-delay: 0s;
+  animation: none;
 }
 
 /* arc: the wavy ring, cut to --p % of its length with a dash, round caps */
 .blyrics--instrumental .blyrics--instrumental-bg {
   d: path("M12.0 2.5L12.6 2.1L13.2 1.8L13.8 1.8L14.4 2.0L14.8 2.5L15.2 3.1L15.6 3.7L15.9 4.2L16.3 4.5L16.8 4.7L17.4 4.7L18.1 4.7L18.8 4.8L19.4 5.0L19.9 5.3L20.2 5.9L20.3 6.5L20.2 7.2L20.1 7.9L20.0 8.5L20.1 9.0L20.4 9.5L20.8 9.9L21.4 10.4L21.9 10.8L22.2 11.4L22.4 12.0L22.2 12.6L21.9 13.2L21.4 13.6L20.8 14.1L20.4 14.5L20.1 15.0L20.0 15.5L20.1 16.1L20.2 16.8L20.3 17.5L20.2 18.1L19.9 18.7L19.4 19.0L18.8 19.2L18.1 19.3L17.4 19.3L16.8 19.3L16.3 19.5L15.9 19.8L15.6 20.3L15.2 20.9L14.8 21.5L14.4 22.0L13.8 22.2L13.2 22.2L12.6 21.9L12.0 21.5L11.5 21.1L11.0 20.7L10.5 20.5L10.0 20.5L9.4 20.7L8.8 20.9L8.1 21.1L7.4 21.1L6.8 21.0L6.4 20.6L6.1 20.0L5.9 19.3L5.8 18.6L5.6 18.0L5.4 17.6L5.0 17.2L4.4 17.0L3.8 16.8L3.1 16.5L2.6 16.1L2.3 15.5L2.2 14.9L2.3 14.3L2.6 13.6L3.0 13.1L3.3 12.5L3.3 12.0L3.3 11.5L3.0 10.9L2.6 10.4L2.3 9.7L2.2 9.1L2.3 8.5L2.6 7.9L3.1 7.5L3.8 7.2L4.4 7.0L5.0 6.8L5.4 6.4L5.6 6.0L5.8 5.4L5.9 4.7L6.1 4.0L6.4 3.4L6.8 3.0L7.4 2.9L8.1 2.9L8.8 3.1L9.4 3.3L10.0 3.5L10.5 3.5L11.0 3.3L11.5 2.9Z");
   fill: none !important;
-  stroke: var(--m3c-primary) !important;
-  stroke-width: 2;
+  stroke: var(--ring-color) !important;
+  stroke-width: var(--ring-stroke-width);
   stroke-linecap: round;
   stroke-linejoin: round;
+  shape-rendering: geometricPrecision;
+  will-change: d, stroke-dasharray, opacity;
   stroke-dasharray: calc(var(--p) * .01 * 68.24px) 68.24px;
   opacity: min(1, calc(var(--p) * 2)) !important;   /* no stray round-cap dot at 0 */
 }
@@ -1371,9 +1405,12 @@ ytmusic-player-page:has(ytmusic-player[player-page-open]) ytmusic-tab-renderer.s
   d: path("M12 2.5 A9.5 9.5 0 0 1 12 21.5 A9.5 9.5 0 0 1 12 2.5 Z");
   clip-path: none !important;
   fill: none !important;
-  stroke: var(--m3c-secondary-container) !important;
-  stroke-width: 1.6;
+  stroke: var(--track-color) !important;
+  stroke-width: var(--track-stroke-width);
   stroke-linecap: round;
+  stroke-linejoin: round;
+  shape-rendering: geometricPrecision;
+  will-change: d, stroke-dasharray, stroke-dashoffset, opacity;
   opacity: clamp(0, calc(((100 - var(--p)) * .5969 - 2 * min(var(--gapu), var(--p))) * 2.5), 1) !important;   /* gone before it shrinks to a dot */
   transition: none !important;
   stroke-dasharray: max(0px, calc((100 - var(--p)) * .01 * 59.69px - 2 * min(var(--gapu), var(--p)) * 1px)) 59.69px;
@@ -1395,8 +1432,8 @@ ytmusic-player-page:has(ytmusic-player[player-page-open]) ytmusic-tab-renderer.s
 
 @media (prefers-reduced-motion: reduce) {
   /* only the scrolling waves stop, the fill is progress */
+  .blyrics--instrumental .blyrics--instrumental-icon {
+    transition: none;
+  }
   .blyrics--instrumental.blyrics--animating .blyrics--instrumental-bg { animation: md-wave-flatten var(--flat-ms) ease-in-out calc(var(--blyrics-duration) - var(--flat-ms)) forwards; }
-}/* instrumental gap: M3 Expressive wavy circular progress ring, no JS.
-   replaces every previous instrumental block. Chromium only (CSS d: path() on SVG paths).
-   everything (track, arc, waves) is drawn inside Better Lyrics' own icon svg, so the track and
-   the arc share one box and cannot drift apart, and the arc ends are round. */
+}
