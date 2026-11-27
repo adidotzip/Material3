@@ -888,7 +888,6 @@ ytmusic-multi-select-menu-renderer #container {
   opacity: 0;
   transform: none;
   transition: opacity 320ms var(--m3-ease, cubic-bezier(0.2, 0, 0, 1));
-  will-change: opacity;
   -webkit-mask: none !important; mask: none !important;
 }
 
@@ -1004,16 +1003,9 @@ ytmusic-multi-select-menu-renderer #container {
     animation: md-wave-flatten var(--flat-ms) ease-in-out calc(var(--lead) + var(--dur) - var(--flat-ms)) forwards;
   }
 }
-html:is([data-ytm-idle], [data-ytmt-hold]) ytmusic-player-bar #progress-bar #progressContainer {
-  animation-play-state: paused;
-}
 html:is([data-ytm-idle], [data-ytmt-hold])
   ytmusic-player-bar #progress-bar #progressContainer {
   animation-play-state: paused !important;
-}
-
-tmusic-player-bar #progress-bar #progressContainer {
-  animation-timing-function: steps(14);
 }
 
 ytmusic-player-bar #progress-bar #sliderContainer {
