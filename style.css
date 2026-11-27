@@ -234,7 +234,7 @@ ytmusic-player-page:has(ytmusic-player[player-page-open]) :is(.content, #main-pa
 
 /* ---------- Typography ---------- */
 html, body, button, input, select, textarea,
-ytmusic-app, ytmusic-app * {
+ytmusic-app {
   font-family: "Google Sans Flex", var(--noto-sans-universal, sans-serif), sans-serif !important;
 }
 
